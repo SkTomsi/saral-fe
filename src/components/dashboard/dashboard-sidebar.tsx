@@ -1,62 +1,74 @@
+import { Brain, Briefcase, ClipboardList, Home, Wallet } from "lucide-react";
 import type * as React from "react";
+import { NavLink } from "react-router";
 
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarRail,
 } from "@/components/ui/sidebar";
+import { HeaderLSemiBold } from "../typography";
 
-// This is sample data.
-const data = {
-	navMain: [
-		{
-			title: "Getting Started",
-			url: "#",
-			items: [
-				{
-					title: "Installation",
-					url: "#",
-				},
-				{
-					title: "Project Structure",
-					url: "#",
-				},
-			],
-		},
-	],
-};
+const navItems = [
+	{
+		title: "Home",
+		url: "/",
+		icon: Home,
+	},
+	{
+		title: "Insights",
+		url: "/insights",
+		icon: Brain,
+	},
+	{
+		title: "Gamification",
+		url: "/gamification",
+		icon: Briefcase,
+	},
+	{
+		title: "Applications",
+		url: "/applications",
+		icon: ClipboardList,
+	},
+	{
+		title: "Payments",
+		url: "/payments",
+		icon: Wallet,
+	},
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar {...props}>
-			<SidebarHeader></SidebarHeader>
-			<SidebarContent>
-				{/* We create a SidebarGroup for each parent. */}
-				{data.navMain.map((item) => (
-					<SidebarGroup key={item.title}>
-						<SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-						<SidebarGroupContent>
-							<SidebarMenu>
-								{item.items.map((item) => (
-									<SidebarMenuItem key={item.title}>
-										{/* TODO: Add active state */}
-										<SidebarMenuButton asChild isActive={item.isActive}>
-											<a href={item.url}>{item.title}</a>
-										</SidebarMenuButton>
-									</SidebarMenuItem>
-								))}
-							</SidebarMenu>
-						</SidebarGroupContent>
-					</SidebarGroup>
-				))}
+			<SidebarContent className="p-4 bg-magenta-3">
+				<SidebarHeader>
+					<div className="flex items-center gap-4">
+						<div className="size-12 rounded-xl bg-magenta-12" />
+						<HeaderLSemiBold>SARAL OS</HeaderLSemiBold>
+					</div>
+				</SidebarHeader>
+				<SidebarMenu className="mt-6 gap-2">
+					{navItems.map((item) => (
+						<SidebarMenuItem key={item.title} className="[&_svg]:size-6 ">
+							<SidebarMenuButton
+								asChild
+								className="bg-magenta-3 hover:bg-magenta-1 text-brand-secondary hover:text-magenta-12 flex items-center rounded-[10px] gap-2 p-3 h-10 transition-all duration-300 ease-out"
+							>
+								{/* TODO: Add active state */}
+								<NavLink to={item.url}>
+									<item.icon className="text-xl" />
+									<span>{item.title}</span>
+								</NavLink>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					))}
+				</SidebarMenu>
 			</SidebarContent>
+
 			<SidebarRail />
 		</Sidebar>
 	);

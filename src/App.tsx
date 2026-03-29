@@ -6,8 +6,12 @@ export function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route element={<DashboardLayout />}>
-					<Route index path="/gamification" element={<GamificationPage />} />
+				<Route path="/" element={<DashboardLayout />}>
+					{/* <Route index element={<HomePage />} /> */}
+					<Route path="insights" element={<div>Insights Page</div>} />
+					<Route path="gamification" element={<GamificationPage />} />
+					<Route path="applications" element={<div>Applications Page</div>} />
+					<Route path="payments" element={<div>Payments Page</div>} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
