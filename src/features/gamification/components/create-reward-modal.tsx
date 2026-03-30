@@ -22,7 +22,7 @@ import {
 	setRewardType,
 	toggleTimeBound,
 } from "../store/reward-event-slice";
-import { EVENT_CONFIG, REWARD_CONFIG } from "../types";
+import { EVENT_CONFIG, REWARD_CONFIG, type RewardType } from "../types";
 import { DynamicSelect } from "./dynamic-select";
 
 export default function CreateRewardModal() {
@@ -93,6 +93,11 @@ export default function CreateRewardModal() {
 								}
 								placeholder="Select a reward"
 								onSave={() => setActiveSelect(null)}
+								disabledValues={
+									eventType === "ONBOARDED"
+										? (["TIER_UPGRADE"] as RewardType[])
+										: []
+								}
 							/>
 						</Field>
 						<div className="flex flex-col w-full  justify-between">

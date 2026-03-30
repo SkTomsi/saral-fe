@@ -15,7 +15,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useAppSelector } from "../store/hooks";
 import type { DynamicConfig } from "../types";
 import { formatLabel } from "../utils";
 
@@ -29,6 +28,7 @@ type DynamicSelectProps<T> = {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	onSave: () => void;
+	disabledValues?: T[];
 };
 
 export function DynamicSelect<T>({
@@ -41,18 +41,16 @@ export function DynamicSelect<T>({
 	open,
 	onOpenChange,
 	onSave,
+	disabledValues = [],
 }: DynamicSelectProps<T>) {
 	const selected = config.find((c) => c.value === value);
-	const eventType = useAppSelector((state) => state.rewards.eventType);
-
-	const isOnboarding = eventType === "ONBOARDED";
 
 	return (
 		<Popover open={open} onOpenChange={onOpenChange}>
 			<PopoverTrigger asChild className="w-full">
 				<Button
 					variant="select"
-					className="text-brand-text font-normal text-base"
+					className="text-base font-normal text-brand-text"
 				>
 					{value ? formatLabel(selected, values) : placeholder}
 					<ChevronDown />
@@ -60,73 +58,79 @@ export function DynamicSelect<T>({
 			</PopoverTrigger>
 
 			<PopoverContent className="w-(--radix-popover-trigger-width) p-1 shadow-2xl">
-				{config.map((item) => (
-					<div key={String(item.value)} className="flex flex-col w-full">
-						<p>{JSON.stringify(item.fields)}</p>
-						<div
-							role="none"
-							onClick={() => onSelect(item.value)}
-							className={clsx(
-								"p-2 rounded-md cursor-pointer hover:bg-magenta-2 flex justify-between items-center",
-								value === item.value && "bg-magenta-2 text-magenta-12",
-								isOnboarding && "opacity-50",
-							)}
-						>
-							{item.label}
-							{selected?.value === item.value && (
-								<Check className="text-magenta-12 size-4" />
-							)}
-						</div>
-						<div className="flex w-full items-center gap-2 mt-1">
-							{value === item.value &&
-								item.fields?.map((field) => {
-									return (
-										<>
-											{field.type === "input" && (
-												<div className="w-full relative">
-													<p className="absolute -translate-y-1/2 top-1/2 left-4 text-brand-secondary text-base">
-														{field.icon}
-													</p>
-													<Input
-														key={field.name}
-														className={clsx(field.icon && "pl-8")}
-														placeholder={field.placeholder}
-														onChange={(e) =>
-															onFieldChange(
-																field.variable || field.name,
-																e.target.value,
-															)
+				{config.map((item) => {
+					const itemDisabled = disabledValues.includes(item.value as T);
+					return (
+						<div key={String(item.value)} className="flex w-full flex-col">
+							<div
+								role="none"
+								onClick={() => !itemDisabled && onSelect(item.value)}
+								className={clsx(
+									"flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-brand-disabled",
+									value === item.value && "bg-magenta-2 text-magenta-12",
+									itemDisabled && "text-brand-disabled pointer-events-none",
+								)}
+							>
+								{item.label}
+								{selected?.value === item.value && (
+									<Check className="size-4 text-magenta-12" />
+								)}
+							</div>
+							<div className="mt-1 flex w-full items-center gap-2">
+								{value === item.value &&
+									item.fields?.map((field) => {
+										return (
+											<>
+												{field.type === "input" && (
+													<div className="relative w-full">
+														<p className="absolute top-1/2 left-4 -translate-y-1/2 text-base text-brand-secondary">
+															{field.icon}
+														</p>
+														<Input
+															key={field.name}
+															className={clsx(field.icon && "pl-8")}
+															placeholder={field.placeholder}
+															onChange={(e) =>
+																onFieldChange(
+																	field.variable || field.name,
+																	e.target.value,
+																)
+															}
+														/>
+													</div>
+												)}
+												{field.type === "select" && (
+													<Select
+														onValueChange={(value) =>
+															onFieldChange(field.variable || field.name, value)
 														}
-													/>
-												</div>
-											)}
-											{field.type === "select" && (
-												<Select
-													onValueChange={(value) =>
-														onFieldChange(field.variable || field.name, value)
-													}
-												>
-													<SelectTrigger className="w-full max-w-48">
-														<SelectValue placeholder={field.placeholder} />
-													</SelectTrigger>
-													<SelectContent>
-														<SelectGroup>
-															<SelectItem value="14 days">14 Days</SelectItem>
-															<SelectItem value="1 month">1 Month</SelectItem>
-															<SelectItem value="2 months">2 Months</SelectItem>
-															<SelectItem value="3 months">3 Months</SelectItem>
-															<SelectItem value="1 year">1 Year</SelectItem>
-														</SelectGroup>
-													</SelectContent>
-												</Select>
-											)}
-										</>
-									);
-								})}
+													>
+														<SelectTrigger className="w-full max-w-48">
+															<SelectValue placeholder={field.placeholder} />
+														</SelectTrigger>
+														<SelectContent>
+															<SelectGroup>
+																<SelectItem value="14 days">14 Days</SelectItem>
+																<SelectItem value="1 month">1 Month</SelectItem>
+																<SelectItem value="2 months">
+																	2 Months
+																</SelectItem>
+																<SelectItem value="3 months">
+																	3 Months
+																</SelectItem>
+																<SelectItem value="1 year">1 Year</SelectItem>
+															</SelectGroup>
+														</SelectContent>
+													</Select>
+												)}
+											</>
+										);
+									})}
+							</div>
 						</div>
-					</div>
-				))}
-				<div className="w-full flex gap-2 mt-2">
+					);
+				})}
+				<div className="mt-2 flex w-full gap-2">
 					<Button
 						className="flex-1"
 						variant={"outline"}
