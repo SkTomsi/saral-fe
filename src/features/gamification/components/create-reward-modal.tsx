@@ -204,8 +204,8 @@ export default function CreateRewardModal() {
 												className="w-full"
 												onClick={() =>
 													toast(() => (
-														<div className="space-y-5">
-															<p className="mx-auto flex w-fit items-center gap-2 rounded-md bg-brand-text px-3 py-2 text-[#FCFDFF]">
+														<div className="space-y-5 w-full">
+															<p className="mx-auto flex w-fit items-center gap-2 rounded-xl bg-brand-text px-3 py-2 text-[#FCFDFF]">
 																<div className="size-fit rounded-full bg-[#2ED389] p-1">
 																	<CheckIcon
 																		className="size-4 text-brand-text"

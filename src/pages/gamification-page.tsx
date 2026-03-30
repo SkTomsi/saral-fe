@@ -54,7 +54,7 @@ export default function GamificationPage() {
 						<CreateRewardModal />
 					</div>
 				</div>
-				<div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mt-12 px-5">
+				<div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mt-12 px-5 max-md:pb-5">
 					{CARD_CONFIG.map((card) => (
 						<Card
 							key={card.title}
@@ -67,7 +67,9 @@ export default function GamificationPage() {
 							</div>
 							<div className="space-y-2 text-center">
 								<HeaderSMedium>{card.title}</HeaderSMedium>
-								<BodyMRegular>{card.subText}</BodyMRegular>
+								<BodyMRegular className="text-pretty max-sm:px-10">
+									{card.subText}
+								</BodyMRegular>
 							</div>
 							<img
 								src={cardBg}
