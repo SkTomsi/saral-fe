@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import DashboardLayout from "./layout/dashboard-layout.tsx";
+import DashboardLayout from "./components/layout/dashboard-layout.tsx";
 import GamificationPage from "./pages/gamification-page.tsx";
 
 export function App() {

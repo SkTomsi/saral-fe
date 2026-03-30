@@ -17,7 +17,7 @@ export default function DashboardHeader() {
 	const activeLink = routeNameMap[location.pathname] || "Dashboard";
 
 	return (
-		<div className="flex w-full items-center justify-between p-4 px-12 border-2 border-blue-500">
+		<div className="flex w-full items-center justify-between p-4 px-12">
 			<HeaderLSemiBold>{activeLink}</HeaderLSemiBold>
 			<div className="flex gap-4 items-center">
 				<div className="relative">
