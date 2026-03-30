@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
 	Brain,
 	Briefcase,
@@ -8,7 +9,6 @@ import {
 } from "lucide-react";
 import type * as React from "react";
 import { NavLink } from "react-router";
-
 import {
 	Sidebar,
 	SidebarContent,
@@ -59,32 +59,40 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</div>
 			</SidebarHeader>
 			<SidebarContent className="bg-magenta-3">
-				<SidebarMenu className="gap-1 px-4 mt-6">
+				<SidebarMenu className="mt-6 gap-1 px-4">
 					{navItems.map((item) => (
 						<SidebarMenuItem key={item.title} className="[&_svg]:size-6 ">
-							<SidebarMenuButton
-								asChild
-								className="bg-magenta-3 hover:bg-magenta-1 text-brand-secondary hover:text-magenta-12 flex items-center rounded-[10px] gap-2 p-3 h-10 transition-all duration-300 ease-out"
+							<NavLink
+								to={item.url}
+								className={({ isActive }) =>
+									clsx(
+										"text-brand-secondary flex h-10 items-center gap-2 rounded-[10px] bg-magenta-3 p-3 transition-all duration-300 ease-out hover:text-magenta-12",
+										isActive && "bg-white text-magenta-12",
+									)
+								}
 							>
-								{/* TODO: Add active state */}
-								<NavLink to={item.url}>
-									<item.icon className="text-xl" />
-									<span>{item.title}</span>
-								</NavLink>
-							</SidebarMenuButton>
+								<item.icon className="text-xl" />
+								<span>{item.title}</span>
+							</NavLink>
 						</SidebarMenuItem>
 					))}
 				</SidebarMenu>
 			</SidebarContent>
 			<SidebarFooter className="bg-magenta-3">
 				<SidebarMenu>
-					<SidebarMenuItem key={"/settings"} className="[&_svg]:size-6 ">
+					<SidebarMenuItem key={"/settings"} className="[&_svg]:size-6">
 						<SidebarMenuButton
 							asChild
-							className="bg-magenta-3 hover:bg-magenta-1 text-brand-secondary hover:text-magenta-12 flex items-center rounded-[10px] gap-2 p-3 h-10 transition-all duration-300 ease-out"
+							className="flex h-10 items-center gap-2 rounded-[10px] bg-magenta-3 p-3 text-brand-secondary transition-all duration-300 ease-out hover:bg-magenta-1 hover:text-magenta-12"
 						>
-							{/* TODO: Add active state */}
-							<NavLink to={"/settings"}>
+							<NavLink
+								to={"/settings"}
+								className={({ isActive }) =>
+									isActive
+										? "bg-magenta-1 text-magenta-12"
+										: "text-brand-secondary hover:text-magenta-12"
+								}
+							>
 								<Settings />
 								<span>Settings</span>
 							</NavLink>

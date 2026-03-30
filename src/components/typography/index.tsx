@@ -80,3 +80,31 @@ export const TagSRegular = ({
 		</span>
 	);
 };
+
+export const HeaderSMedium = ({
+	children,
+	className,
+}: {
+	children: React.ReactNode;
+	className?: string;
+}) => {
+	return (
+		<h1 className={cn("text-base font-medium text-brand-text", className)}>
+			{children}
+		</h1>
+	);
+};
+
+export const BodyMRegular = ({
+	children,
+	className,
+}: {
+	children: React.ReactNode;
+	className?: string;
+}) => {
+	return (
+		<p className={cn("text-sm font-normal  text-brand-secondary ", className)}>
+			{children}
+		</p>
+	);
+};
