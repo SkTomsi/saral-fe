@@ -86,7 +86,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			data-slot="dialog-header"
-			className={cn("flex flex-col gap-2 mb-4", className)}
+			className={cn("mb-4 flex flex-col gap-2", className)}
 			{...props}
 		/>
 	);
@@ -104,16 +104,14 @@ function DialogFooter({
 		<div
 			data-slot="dialog-footer"
 			className={cn(
-				"flex w-full mt-6 flex-col-reverse sm:flex-row gap-4",
+				"mt-6 flex w-full flex-col-reverse gap-4 sm:flex-row [&>*]:flex-1",
 				className,
 			)}
 			{...props}
 		>
 			{showCloseButton && (
-				<DialogPrimitive.Close asChild className="">
-					<Button variant="outline" className="flex-1">
-						Close
-					</Button>
+				<DialogPrimitive.Close asChild>
+					<Button variant="outline">Close</Button>
 				</DialogPrimitive.Close>
 			)}
 			{children}

@@ -7,16 +7,19 @@ import { ThemeProvider } from "@/components/theme-provider.tsx";
 import App from "./App.tsx";
 import { SidebarProvider } from "./components/ui/sidebar.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
+import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { store } from "./features/gamification/store/index.ts";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<ThemeProvider defaultTheme="light">
 			<Provider store={store}>
-				<SidebarProvider>
-					<App />
-					<Toaster position="top-right" />
-				</SidebarProvider>
+				<TooltipProvider>
+					<SidebarProvider>
+						<App />
+						<Toaster position="top-right" />
+					</SidebarProvider>
+				</TooltipProvider>
 			</Provider>
 		</ThemeProvider>
 	</StrictMode>,
