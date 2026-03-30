@@ -204,22 +204,27 @@ export default function CreateRewardModal() {
 												type="button"
 												className="w-full"
 												onClick={() => {
-													toast(() => (
-														<div className="w-full space-y-5">
-															<p className="mx-auto flex w-fit items-center gap-2 rounded-xl bg-brand-text px-3 py-2 text-[#FCFDFF]">
-																<div className="size-fit rounded-full bg-[#2ED389] p-1">
-																	<CheckIcon
-																		className="size-4 text-brand-text"
-																		strokeWidth={4}
-																	/>
-																</div>
-																Reward Created!
-															</p>
-															<pre className="rounded-md bg-brand-border p-4 text-wrap">
-																data: {JSON.stringify(storeData, null, 2)}
-															</pre>
-														</div>
-													));
+													toast(
+														() => (
+															<div className="w-full space-y-5">
+																<p className="mx-auto flex w-fit items-center gap-2 rounded-xl bg-brand-text px-3 py-2 text-[#FCFDFF]">
+																	<div className="size-fit rounded-full bg-[#2ED389] p-1">
+																		<CheckIcon
+																			className="size-4 text-brand-text"
+																			strokeWidth={4}
+																		/>
+																	</div>
+																	Reward Created!
+																</p>
+																<pre className="rounded-md bg-brand-border p-4 text-wrap">
+																	data: {JSON.stringify(storeData, null, 2)}
+																</pre>
+															</div>
+														),
+														{
+															duration: 5000,
+														},
+													);
 													setDialogOpen(false);
 												}}
 												disabled={
