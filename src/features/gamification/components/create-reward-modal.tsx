@@ -52,8 +52,6 @@ export default function CreateRewardModal() {
 	);
 	const [tierModalOpen, setTierModalOpen] = useState(false);
 
-	console.log(storeData);
-
 	return (
 		<>
 			<TierUpgradeModal open={tierModalOpen} onOpenChange={setTierModalOpen} />
@@ -164,11 +162,11 @@ export default function CreateRewardModal() {
 												<Calendar
 													mode="single"
 													selected={timeBoundEndDate}
+													defaultMonth={new Date()}
 													onSelect={(date) =>
 														dispatch(setTimeBoundEndDate(date))
 													}
 													disabled={(date) => date <= new Date()}
-													initialFocus
 												/>
 											</PopoverContent>
 										</Popover>
