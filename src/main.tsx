@@ -11,7 +11,7 @@ import { store } from "./features/gamification/store/index.ts";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<ThemeProvider>
+		<ThemeProvider defaultTheme="light">
 			<Provider store={store}>
 				<SidebarProvider>
 					<App />
