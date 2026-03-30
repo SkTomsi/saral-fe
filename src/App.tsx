@@ -29,6 +29,10 @@ export function App() {
 						path="payments"
 						element={<div className="p-3">Payments Page</div>}
 					/>
+					<Route
+						path="/settings"
+						element={<div className="p-3">Settings Page</div>}
+					/>
 				</Route>
 			</Routes>
 		</BrowserRouter>

@@ -58,7 +58,7 @@ export default function GamificationPage() {
 					{CARD_CONFIG.map((card) => (
 						<Card
 							key={card.title}
-							className="flex flex-col justify-center items-center px-4 py-5 ring-magenta-4 relative z-0"
+							className="flex flex-col justify-center items-center px-4 py-5 ring-magenta-4 relative z-0 shadow-xl shadow-magenta-12/10"
 						>
 							<div className="size-[70px] bg-magenta-7 rounded-2xl p-2">
 								<div className="w-full h-full flex justify-center items-center bg-white rounded-xl">

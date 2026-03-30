@@ -81,22 +81,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<SidebarFooter className="bg-magenta-3">
 				<SidebarMenu>
 					<SidebarMenuItem key={"/settings"} className="[&_svg]:size-6">
-						<SidebarMenuButton
-							asChild
-							className="flex h-10 items-center gap-2 rounded-[10px] bg-magenta-3 p-3 text-brand-secondary transition-all duration-300 ease-out hover:bg-magenta-1 hover:text-magenta-12"
+						<NavLink
+							to={"/settings"}
+							className={({ isActive }) =>
+								clsx(
+									"text-brand-secondary flex h-10 items-center gap-2 rounded-[10px] bg-magenta-3 p-3 transition-all duration-300 ease-out hover:text-magenta-12 hover:bg-white",
+									isActive && "bg-white text-magenta-12",
+								)
+							}
 						>
-							<NavLink
-								to={"/settings"}
-								className={({ isActive }) =>
-									isActive
-										? "bg-magenta-1 text-magenta-12"
-										: "text-brand-secondary hover:text-magenta-12"
-								}
-							>
-								<Settings />
-								<span>Settings</span>
-							</NavLink>
-						</SidebarMenuButton>
+							<Settings className="text-xl" />
+							<span>Settings</span>
+						</NavLink>
 					</SidebarMenuItem>
 				</SidebarMenu>
 			</SidebarFooter>
