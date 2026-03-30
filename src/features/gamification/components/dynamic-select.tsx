@@ -61,12 +61,15 @@ export function DynamicSelect<T>({
 				{config.map((item) => {
 					const itemDisabled = disabledValues.includes(item.value as T);
 					return (
-						<div key={String(item.value)} className="flex w-full flex-col">
+						<div
+							key={String(item.value)}
+							className="flex w-full flex-col gap-0"
+						>
 							<div
 								role="none"
 								onClick={() => !itemDisabled && onSelect(item.value)}
 								className={clsx(
-									"flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-brand-disabled",
+									"flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-brand-border/30",
 									value === item.value && "bg-magenta-2 text-magenta-12",
 									itemDisabled && "text-brand-disabled pointer-events-none",
 								)}

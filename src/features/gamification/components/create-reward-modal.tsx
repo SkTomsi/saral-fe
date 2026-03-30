@@ -1,7 +1,10 @@
+import clsx from "clsx";
+import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
 	Dialog,
 	DialogContent,
@@ -12,6 +15,11 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 import { BodyLRegular, TagSRegular } from "../../../components/typography";
 import { useAppSelector } from "../store/hooks";
@@ -20,6 +28,7 @@ import {
 	setEventType,
 	setRewardField,
 	setRewardType,
+	setTimeBoundEndDate,
 	toggleTimeBound,
 } from "../store/reward-event-slice";
 import { EVENT_CONFIG, REWARD_CONFIG, type RewardType } from "../types";
@@ -32,6 +41,10 @@ export default function CreateRewardModal() {
 	const rewardType = useAppSelector((state) => state.rewards.rewardType);
 	const rewardFields = useAppSelector((state) => state.rewards.rewardFields);
 	const storeData = useAppSelector((state) => state.rewards);
+	const isTimeBound = useAppSelector((state) => state.rewards.isTimeBound);
+	const timeBoundEndDate = useAppSelector(
+		(state) => state.rewards.timeBoundEndDate,
+	);
 
 	const [activeSelect, setActiveSelect] = useState<"event" | "reward" | null>(
 		null,
@@ -100,16 +113,52 @@ export default function CreateRewardModal() {
 								}
 							/>
 						</Field>
-						<div className="flex flex-col w-full  justify-between">
-							<div className="w-full flex justify-between py-1">
+						<div className="flex w-full flex-col justify-between">
+							<div className="flex w-full justify-between py-1">
 								<Label className="font-medium text-brand-text">
 									Make the reward time bound
 								</Label>
-								<Switch onCheckedChange={() => dispatch(toggleTimeBound())} />
+								<Switch
+									checked={isTimeBound}
+									onCheckedChange={() => dispatch(toggleTimeBound())}
+								/>
 							</div>
 							<TagSRegular>
 								Choose an end date to stop this reward automatically.
 							</TagSRegular>
+							{isTimeBound && (
+								<div className="mt-2">
+									<Popover>
+										<PopoverTrigger asChild>
+											<Button
+												variant="outline"
+												className={clsx(
+													"w-full justify-start text-base font-normal text-brand-disabled",
+													timeBoundEndDate && "text-brand-text",
+												)}
+											>
+												<CalendarIcon className="size-6" />
+												{timeBoundEndDate
+													? timeBoundEndDate.toLocaleString("en-us", {
+															day: "numeric",
+															month: "short",
+															year: "numeric",
+														})
+													: "Select end date"}
+											</Button>
+										</PopoverTrigger>
+										<PopoverContent className="w-auto p-0" align="start">
+											<Calendar
+												mode="single"
+												selected={timeBoundEndDate}
+												onSelect={(date) => dispatch(setTimeBoundEndDate(date))}
+												disabled={(date) => date <= new Date()}
+												initialFocus
+											/>
+										</PopoverContent>
+									</Popover>
+								</div>
+							)}
 						</div>
 					</FieldGroup>
 					<DialogFooter className="" showCloseButton>
@@ -123,9 +172,13 @@ export default function CreateRewardModal() {
 									</div>
 								))
 							}
-							disabled={!storeData.eventType || !storeData.rewardType}
+							disabled={
+								!storeData.eventType ||
+								!storeData.rewardType ||
+								(isTimeBound && !timeBoundEndDate)
+							}
 						>
-							Save changes
+							Create Reward
 						</Button>
 					</DialogFooter>
 				</DialogContent>
