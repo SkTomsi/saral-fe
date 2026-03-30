@@ -104,12 +104,11 @@ function DialogFooter({
 		<div
 			data-slot="dialog-footer"
 			className={cn(
-				"flex w-full mt-6 flex-col-reverse sm:flex-row-reverse gap-4",
+				"flex w-full mt-6 flex-col-reverse sm:flex-row gap-4",
 				className,
 			)}
 			{...props}
 		>
-			{children}
 			{showCloseButton && (
 				<DialogPrimitive.Close asChild className="">
 					<Button variant="outline" className="flex-1">
@@ -117,6 +116,7 @@ function DialogFooter({
 					</Button>
 				</DialogPrimitive.Close>
 			)}
+			{children}
 		</div>
 	);
 }
