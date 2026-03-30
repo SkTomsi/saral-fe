@@ -8,6 +8,7 @@ export function App() {
 			<Routes>
 				<Route path="/" element={<DashboardLayout />}>
 					<Route
+						index
 						element={
 							<div className="p-3">
 								Home Page
