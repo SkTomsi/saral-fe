@@ -31,7 +31,7 @@ export function TierUpgradeModal({
 }: TierUpgradeModalProps) {
 	const dispatch = useDispatch();
 	const rewardFields = useAppSelector(
-		(state) => state.rewards.reward.fields["TIER_UPGRADE"],
+		(state) => state.rewards.reward.fields.TIER_UPGRADE,
 	);
 	const selectedTier = rewardFields?.tier;
 

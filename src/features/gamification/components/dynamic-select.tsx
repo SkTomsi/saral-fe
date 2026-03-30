@@ -15,6 +15,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { DynamicConfig } from "../types";
 import { formatLabel } from "../utils";
 
@@ -44,6 +50,11 @@ export function DynamicSelect<T>({
 	disabledValues = [],
 }: DynamicSelectProps<T>) {
 	const selected = config.find((c) => c.value === value);
+
+	const missingRequiredField = selected?.fields?.find(
+		(field) => field.required && !fields[field.variable || field.name],
+	);
+	const hasRequiredFields = selected?.fields?.some((f) => f.required);
 
 	return (
 		<Popover open={open} onOpenChange={onOpenChange}>
@@ -147,9 +158,32 @@ export function DynamicSelect<T>({
 					>
 						Cancel
 					</Button>
-					<Button className="flex-1" onClick={() => onSave?.()}>
-						Save
-					</Button>
+					{hasRequiredFields ? (
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<div className="flex-1">
+										<Button
+											className="w-full"
+											disabled={!!missingRequiredField}
+											onClick={() => onSave?.()}
+										>
+											Save
+										</Button>
+									</div>
+								</TooltipTrigger>
+								{missingRequiredField?.tooltipMessage ? (
+									<TooltipContent>
+										{missingRequiredField.tooltipMessage}
+									</TooltipContent>
+								) : null}
+							</Tooltip>
+						</TooltipProvider>
+					) : (
+						<Button className="flex-1" onClick={() => onSave?.()}>
+							Save
+						</Button>
+					)}
 				</div>
 			</PopoverContent>
 		</Popover>

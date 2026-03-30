@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
@@ -21,7 +21,14 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { BodyLRegular, TagSRegular } from "../../../components/typography";
+import { EVENT_CONFIG, REWARD_CONFIG } from "../config";
 import { useAppSelector } from "../store/hooks";
 import {
 	setEventField,
@@ -31,7 +38,7 @@ import {
 	setTimeBoundEndDate,
 	toggleTimeBound,
 } from "../store/reward-event-slice";
-import { EVENT_CONFIG, REWARD_CONFIG, type RewardType } from "../types";
+import type { RewardType } from "../types";
 import { DynamicSelect } from "./dynamic-select";
 import { TierUpgradeModal } from "./tier-upgrade-modal";
 
@@ -183,26 +190,53 @@ export default function CreateRewardModal() {
 							</div>
 						</FieldGroup>
 						<DialogFooter className="" showCloseButton>
-							<Button
-								type="submit"
-								className="flex-1"
-								onClick={() =>
-									toast(() => (
-										<div>
-											<pre className="text-wrap">
-												data: {JSON.stringify(storeData, null, 2)}
-											</pre>
+							<TooltipProvider>
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<div className="flex-1">
+											<Button
+												type="submit"
+												className="w-full"
+												onClick={() =>
+													toast(() => (
+														<div className="space-y-5">
+															<p className="flex gap-2 items-center bg-brand-text rounded-md py-2 px-3 text-[#FCFDFF] w-fit mx-auto">
+																<div className="size-fit p-1 rounded-full bg-[#2ED389]">
+																	<CheckIcon
+																		className="size-4 text-brand-text"
+																		strokeWidth={4}
+																	/>
+																</div>
+																Reward Created!
+															</p>
+															<pre className="text-wrap bg-brand-border rounded-md p-4">
+																data: {JSON.stringify(storeData, null, 2)}
+															</pre>
+														</div>
+													))
+												}
+												disabled={
+													!storeData.event.selectedType ||
+													!storeData.reward.selectedType ||
+													(isTimeBound && !timeBoundEndDate)
+												}
+											>
+												Create Reward
+											</Button>
 										</div>
-									))
-								}
-								disabled={
-									!storeData.event.selectedType ||
-									!storeData.reward.selectedType ||
-									(isTimeBound && !timeBoundEndDate)
-								}
-							>
-								Create Reward
-							</Button>
+									</TooltipTrigger>
+									{!storeData.event.selectedType ||
+									!storeData.reward.selectedType ? (
+										<TooltipContent side="bottom">
+											Choose a reward trigger and a reward to continue
+										</TooltipContent>
+									) : isTimeBound && !timeBoundEndDate ? (
+										<TooltipContent>
+											Choose reward end date to continue
+										</TooltipContent>
+									) : null}
+								</Tooltip>
+							</TooltipProvider>
 						</DialogFooter>
 					</DialogContent>
 				</form>
