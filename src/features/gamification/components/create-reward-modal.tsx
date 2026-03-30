@@ -66,11 +66,12 @@ export default function CreateRewardModal() {
 		null,
 	);
 	const [tierModalOpen, setTierModalOpen] = useState(false);
+	const [dialogOpen, setDialogOpen] = useState(false);
 
 	return (
 		<>
 			<TierUpgradeModal open={tierModalOpen} onOpenChange={setTierModalOpen} />
-			<Dialog>
+			<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
 				<form>
 					<DialogTrigger asChild>
 						<Button className="w-full">
@@ -200,11 +201,11 @@ export default function CreateRewardModal() {
 									<TooltipTrigger asChild>
 										<div className="flex-1">
 											<Button
-												type="submit"
+												type="button"
 												className="w-full"
-												onClick={() =>
+												onClick={() => {
 													toast(() => (
-														<div className="space-y-5 w-full">
+														<div className="w-full space-y-5">
 															<p className="mx-auto flex w-fit items-center gap-2 rounded-xl bg-brand-text px-3 py-2 text-[#FCFDFF]">
 																<div className="size-fit rounded-full bg-[#2ED389] p-1">
 																	<CheckIcon
@@ -218,8 +219,9 @@ export default function CreateRewardModal() {
 																data: {JSON.stringify(storeData, null, 2)}
 															</pre>
 														</div>
-													))
-												}
+													));
+													setDialogOpen(false);
+												}}
 												disabled={
 													!storeData.event.selectedType ||
 													!storeData.reward.selectedType ||
