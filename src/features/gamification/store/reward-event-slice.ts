@@ -61,11 +61,9 @@ const rewardSlice = createSlice({
 		},
 
 		// REWARD
-		setRewardType(state, action: PayloadAction<RewardType>) {
-			if (state.reward.selectedType !== action.payload) {
-				state.reward.selectedType = action.payload;
-				state.reward.fields = {};
-			}
+		setRewardType(state, action: PayloadAction<RewardType | undefined>) {
+			state.reward.selectedType = action.payload;
+			state.reward.fields = {};
 		},
 
 		setRewardField(

@@ -7,11 +7,28 @@ export function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<DashboardLayout />}>
-					{/* <Route index element={<HomePage />} /> */}
-					<Route path="insights" element={<div>Insights Page</div>} />
+					<Route
+						index
+						element={
+							<div className="p-3">
+								Home Page
+								<div>Checkout gamification tab to create a reward system</div>
+							</div>
+						}
+					/>
+					<Route
+						path="insights"
+						element={<div className="p-3">Insights Page</div>}
+					/>
 					<Route path="gamification" element={<GamificationPage />} />
-					<Route path="applications" element={<div>Applications Page</div>} />
-					<Route path="payments" element={<div>Payments Page</div>} />
+					<Route
+						path="applications"
+						element={<div className="p-3">Applications Page</div>}
+					/>
+					<Route
+						path="payments"
+						element={<div className="p-3">Payments Page</div>}
+					/>
 				</Route>
 			</Routes>
 		</BrowserRouter>

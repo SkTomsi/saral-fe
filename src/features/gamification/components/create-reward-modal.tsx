@@ -99,6 +99,11 @@ export default function CreateRewardModal() {
 									fields={eventFields}
 									onSelect={(val) => {
 										dispatch(setEventType(val));
+										if (val === "ONBOARDED" && rewardType === "TIER_UPGRADE") {
+											dispatch(
+												setRewardType(undefined as unknown as RewardType),
+											);
+										}
 									}}
 									onFieldChange={(key, value) =>
 										dispatch(setEventField({ variable: key, value }))
@@ -200,8 +205,8 @@ export default function CreateRewardModal() {
 												onClick={() =>
 													toast(() => (
 														<div className="space-y-5">
-															<p className="flex gap-2 items-center bg-brand-text rounded-md py-2 px-3 text-[#FCFDFF] w-fit mx-auto">
-																<div className="size-fit p-1 rounded-full bg-[#2ED389]">
+															<p className="mx-auto flex w-fit items-center gap-2 rounded-md bg-brand-text px-3 py-2 text-[#FCFDFF]">
+																<div className="size-fit rounded-full bg-[#2ED389] p-1">
 																	<CheckIcon
 																		className="size-4 text-brand-text"
 																		strokeWidth={4}
@@ -209,7 +214,7 @@ export default function CreateRewardModal() {
 																</div>
 																Reward Created!
 															</p>
-															<pre className="text-wrap bg-brand-border rounded-md p-4">
+															<pre className="rounded-md bg-brand-border p-4 text-wrap">
 																data: {JSON.stringify(storeData, null, 2)}
 															</pre>
 														</div>
