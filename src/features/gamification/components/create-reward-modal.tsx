@@ -195,42 +195,40 @@ export default function CreateRewardModal() {
 								)}
 							</div>
 						</FieldGroup>
-						<DialogFooter className="" showCloseButton>
+						<DialogFooter showCloseButton>
 							<TooltipProvider>
 								<Tooltip>
 									<TooltipTrigger asChild>
-										<div className="flex-1">
-											<Button
-												type="button"
-												className="w-full"
-												onClick={() => {
-													toast(() => (
-														<div className="w-full space-y-5">
-															<p className="mx-auto flex w-fit items-center gap-2 rounded-xl bg-brand-text px-3 py-2 text-[#FCFDFF]">
-																<div className="size-fit rounded-full bg-[#2ED389] p-1">
-																	<CheckIcon
-																		className="size-4 text-brand-text"
-																		strokeWidth={4}
-																	/>
-																</div>
-																Reward Created!
-															</p>
-															<pre className="rounded-md bg-brand-border p-4 text-wrap">
-																data: {JSON.stringify(storeData, null, 2)}
-															</pre>
-														</div>
-													));
-													setDialogOpen(false);
-												}}
-												disabled={
-													!storeData.event.selectedType ||
-													!storeData.reward.selectedType ||
-													(isTimeBound && !timeBoundEndDate)
-												}
-											>
-												Create Reward
-											</Button>
-										</div>
+										<Button
+											type="button"
+											className="flex-1"
+											onClick={() => {
+												toast(() => (
+													<div className="w-full space-y-5">
+														<p className="mx-auto flex w-fit items-center gap-2 rounded-xl bg-brand-text px-3 py-2 text-[#FCFDFF]">
+															<div className="size-fit rounded-full bg-[#2ED389] p-1">
+																<CheckIcon
+																	className="size-4 text-brand-text"
+																	strokeWidth={4}
+																/>
+															</div>
+															Reward Created!
+														</p>
+														<pre className="rounded-md bg-brand-border p-4 text-wrap">
+															data: {JSON.stringify(storeData, null, 2)}
+														</pre>
+													</div>
+												));
+												setDialogOpen(false);
+											}}
+											disabled={
+												!storeData.event.selectedType ||
+												!storeData.reward.selectedType ||
+												(isTimeBound && !timeBoundEndDate)
+											}
+										>
+											Create Reward
+										</Button>
 									</TooltipTrigger>
 									{!storeData.event.selectedType ||
 									!storeData.reward.selectedType ? (
