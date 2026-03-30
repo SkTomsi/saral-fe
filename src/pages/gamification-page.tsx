@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import CreateRewardModal from "@/features/gamification/components/create-reward-modal";
 import bgImg from "../assets/bg.png";
 import crownSvg from "../assets/Crown.svg";
+import cardBg from "../assets/card-bg.svg";
 import giftSvg from "../assets/Gift.svg";
 import ticketSvg from "../assets/Ticket Sale.svg";
 
@@ -53,11 +54,11 @@ export default function GamificationPage() {
 						<CreateRewardModal />
 					</div>
 				</div>
-				<div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mt-12 max-sm:px-5">
+				<div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mt-12 px-5">
 					{CARD_CONFIG.map((card) => (
 						<Card
 							key={card.title}
-							className="flex flex-col justify-center items-center px-4 py-5"
+							className="flex flex-col justify-center items-center px-4 py-5 ring-magenta-4 relative z-0"
 						>
 							<div className="size-[70px] bg-magenta-7 rounded-2xl p-2">
 								<div className="w-full h-full flex justify-center items-center bg-white rounded-xl">
@@ -68,6 +69,11 @@ export default function GamificationPage() {
 								<HeaderSMedium>{card.title}</HeaderSMedium>
 								<BodyMRegular>{card.subText}</BodyMRegular>
 							</div>
+							<img
+								src={cardBg}
+								alt="card-bg"
+								className="absolute top-0 left-0 w-full h-fit object-contain -z-1"
+							/>
 						</Card>
 					))}
 				</div>
