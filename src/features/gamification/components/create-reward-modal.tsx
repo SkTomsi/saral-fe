@@ -77,7 +77,7 @@ export default function CreateRewardModal() {
 								onOpenChange={(open) => setActiveSelect(open ? "event" : null)}
 								config={EVENT_CONFIG}
 								value={eventType}
-								values={eventFields}
+								fields={eventFields}
 								onSelect={(val) => {
 									dispatch(setEventType(val));
 								}}
@@ -99,7 +99,7 @@ export default function CreateRewardModal() {
 								onOpenChange={(open) => setActiveSelect(open ? "reward" : null)}
 								config={REWARD_CONFIG}
 								value={rewardType}
-								values={rewardFields}
+								fields={rewardFields}
 								onSelect={(val) => dispatch(setRewardType(val))}
 								onFieldChange={(key, value) =>
 									dispatch(setRewardField({ variable: key, value }))
@@ -168,7 +168,9 @@ export default function CreateRewardModal() {
 							onClick={() =>
 								toast(() => (
 									<div>
-										<pre>data: {JSON.stringify(storeData, null, 2)}</pre>
+										<pre className="text-wrap">
+											data: {JSON.stringify(storeData, null, 2)}
+										</pre>
 									</div>
 								))
 							}

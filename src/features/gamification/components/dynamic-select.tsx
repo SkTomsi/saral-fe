@@ -21,7 +21,7 @@ import { formatLabel } from "../utils";
 type DynamicSelectProps<T> = {
 	config: DynamicConfig<T>[];
 	value?: T;
-	values: Record<string, string>;
+	fields: Record<string, string>;
 	onSelect: (val: T) => void;
 	onFieldChange: (key: string, value: string) => void;
 	placeholder?: string;
@@ -34,7 +34,7 @@ type DynamicSelectProps<T> = {
 export function DynamicSelect<T>({
 	config,
 	value,
-	values,
+	fields: values,
 	onSelect,
 	onFieldChange,
 	placeholder = "Select",
@@ -71,7 +71,7 @@ export function DynamicSelect<T>({
 								className={clsx(
 									"flex cursor-pointer items-center justify-between rounded-md p-2 hover:bg-brand-border/30",
 									value === item.value && "bg-magenta-2 text-magenta-12",
-									itemDisabled && "text-brand-disabled pointer-events-none",
+									itemDisabled && "pointer-events-none text-brand-disabled",
 								)}
 							>
 								{item.label}
@@ -91,6 +91,10 @@ export function DynamicSelect<T>({
 														</p>
 														<Input
 															key={field.name}
+															autoFocus={
+																value === item.value &&
+																!values[field.variable || field.name]
+															}
 															className={clsx(field.icon && "pl-8")}
 															placeholder={field.placeholder}
 															onChange={(e) =>
