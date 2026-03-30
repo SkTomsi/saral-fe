@@ -34,7 +34,7 @@ type DynamicSelectProps<T> = {
 export function DynamicSelect<T>({
 	config,
 	value,
-	fields: values,
+	fields,
 	onSelect,
 	onFieldChange,
 	placeholder = "Select",
@@ -52,7 +52,7 @@ export function DynamicSelect<T>({
 					variant="select"
 					className="text-base font-normal text-brand-text"
 				>
-					{value ? formatLabel(selected, values) : placeholder}
+					{value ? formatLabel(selected, fields) : placeholder}
 					<ChevronDown />
 				</Button>
 			</PopoverTrigger>
@@ -90,10 +90,11 @@ export function DynamicSelect<T>({
 															{field.icon}
 														</p>
 														<Input
+															value={fields[field.variable || field.name] || ""}
 															key={field.name}
 															autoFocus={
 																value === item.value &&
-																!values[field.variable || field.name]
+																!fields[field.variable || field.name]
 															}
 															className={clsx(field.icon && "pl-8")}
 															placeholder={field.placeholder}
@@ -108,6 +109,7 @@ export function DynamicSelect<T>({
 												)}
 												{field.type === "select" && (
 													<Select
+														value={fields[field.variable || field.name]}
 														onValueChange={(value) =>
 															onFieldChange(field.variable || field.name, value)
 														}

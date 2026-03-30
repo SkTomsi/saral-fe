@@ -1,18 +1,36 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import type { EventType, RewardType } from "../types"
 
+type EventFieldsMap = {
+  [K in EventType]?: Record<string, string>
+}
+
+type RewardFieldsMap = {
+  [K in RewardType]?: Record<string, string>
+}
+
 export type RewardState = {
-  eventType?: EventType
-  eventFields: Record<string, string>
-  rewardType?: RewardType
-  rewardFields: Record<string, string>
+  event: {
+    selectedType?: EventType
+    fields: EventFieldsMap
+  }
+  reward: {
+    selectedType?: RewardType
+    fields: RewardFieldsMap
+  }
   isTimeBound: boolean
   timeBoundEndDate?: Date
 }
 
 const initialState: RewardState = {
-  eventFields: {},
-  rewardFields: {},
+  event: {
+    selectedType: undefined,
+    fields: {},
+  },
+  reward: {
+    selectedType: undefined,
+    fields: {},
+  },
   isTimeBound: false,
 }
 
@@ -22,28 +40,46 @@ const rewardSlice = createSlice({
   reducers: {
     // EVENT
     setEventType(state, action: PayloadAction<EventType>) {
-      state.eventType = action.payload
-      state.eventFields = {}
+      if (state.event.selectedType !== action.payload) {
+        state.event.selectedType = action.payload
+        state.event.fields = {}
+      }
     },
 
     setEventField(
       state,
       action: PayloadAction<{ variable: string; value: string }>
     ) {
-      state.eventFields[action.payload.variable] = action.payload.value
+      const selectedType = state.event.selectedType
+      if (selectedType) {
+        if (!state.event.fields[selectedType]) {
+          state.event.fields[selectedType] = {}
+        }
+        state.event.fields[selectedType][action.payload.variable] =
+          action.payload.value
+      }
     },
 
     // REWARD
     setRewardType(state, action: PayloadAction<RewardType>) {
-      state.rewardType = action.payload
-      state.rewardFields = {}
+      if (state.reward.selectedType !== action.payload) {
+        state.reward.selectedType = action.payload
+        state.reward.fields = {}
+      }
     },
 
     setRewardField(
       state,
       action: PayloadAction<{ variable: string; value: string }>
     ) {
-      state.rewardFields[action.payload.variable] = action.payload.value
+      const selectedType = state.reward.selectedType
+      if (selectedType) {
+        if (!state.reward.fields[selectedType]) {
+          state.reward.fields[selectedType] = {}
+        }
+        state.reward.fields[selectedType][action.payload.variable] =
+          action.payload.value
+      }
     },
 
     // COMMON

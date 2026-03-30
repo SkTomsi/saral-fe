@@ -37,10 +37,18 @@ import { TierUpgradeModal } from "./tier-upgrade-modal";
 
 export default function CreateRewardModal() {
 	const dispatch = useDispatch();
-	const eventType = useAppSelector((state) => state.rewards.eventType);
-	const eventFields = useAppSelector((state) => state.rewards.eventFields);
-	const rewardType = useAppSelector((state) => state.rewards.rewardType);
-	const rewardFields = useAppSelector((state) => state.rewards.rewardFields);
+	const eventType = useAppSelector((state) => state.rewards.event.selectedType);
+	const eventFields = useAppSelector((state) => {
+		const selectedType = state.rewards.event.selectedType;
+		return selectedType ? state.rewards.event.fields[selectedType] || {} : {};
+	});
+	const rewardType = useAppSelector(
+		(state) => state.rewards.reward.selectedType,
+	);
+	const rewardFields = useAppSelector((state) => {
+		const selectedType = state.rewards.reward.selectedType;
+		return selectedType ? state.rewards.reward.fields[selectedType] || {} : {};
+	});
 	const storeData = useAppSelector((state) => state.rewards);
 	const isTimeBound = useAppSelector((state) => state.rewards.isTimeBound);
 	const timeBoundEndDate = useAppSelector(
@@ -188,8 +196,8 @@ export default function CreateRewardModal() {
 									))
 								}
 								disabled={
-									!storeData.eventType ||
-									!storeData.rewardType ||
+									!storeData.event.selectedType ||
+									!storeData.reward.selectedType ||
 									(isTimeBound && !timeBoundEndDate)
 								}
 							>

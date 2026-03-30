@@ -9,15 +9,17 @@ export function formatLabel<T>(
 	let label = config.label;
 
 	if (config.value === "TIER_UPGRADE") {
-		return `Upgrade to ${values.tier}`;
+		return `Upgrade to ${values["tier"]}`;
 	}
 
 	config.fields?.forEach((field) => {
 		if (!field.variable) return;
 
-		const value = values[field.variable];
+		const value = values[field.name] || values[field.variable];
 
-		label = label.replace(field.variable, value || field.variable);
+		if (value) {
+			label = label.replace(field.variable, value);
+		}
 	});
 
 	return label;

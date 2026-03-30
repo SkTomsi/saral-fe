@@ -30,8 +30,10 @@ export function TierUpgradeModal({
 	onOpenChange,
 }: TierUpgradeModalProps) {
 	const dispatch = useDispatch();
-	const rewardFields = useAppSelector((state) => state.rewards.rewardFields);
-	const selectedTier = rewardFields.tier;
+	const rewardFields = useAppSelector(
+		(state) => state.rewards.reward.fields["TIER_UPGRADE"],
+	);
+	const selectedTier = rewardFields?.tier;
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
